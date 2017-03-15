@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if User.with_writable { @user.save }
+      helpers.log_in @user
       flash[:success] = "Welcome!"
 
       # redirect_to user_url(@user)
