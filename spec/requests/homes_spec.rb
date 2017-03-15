@@ -55,7 +55,6 @@ RSpec.describe "Homes", type: :request do
       }
     end
 
-
     it "response contain error" do
       post users_path, test_error_user_param
       expect(response.status).to eq(200)
@@ -69,6 +68,7 @@ RSpec.describe "Homes", type: :request do
   end
 
   describe "POST Login Request" do
+    include SpecTestHelper
     let(:test_error_user_param) do
       {
           params:{
@@ -91,7 +91,6 @@ RSpec.describe "Homes", type: :request do
       }
     end
 
-
     it "response login contain invalid" do
       post login_path, test_error_user_param
       expect(response.status).to eq(200)
@@ -101,8 +100,15 @@ RSpec.describe "Homes", type: :request do
     end
 
     it "response login success" do
+      User.with_writable {User.create(name: 'test', email: 'test@success.com', password: 'rails5', password_confirmation: 'rails5')}
+      session = {
+          :email => 'test@success.com',
+          :password => 'rails5',
+      }
+      add_session(session)
       post login_path, test_success_user_param
-      expect(response.status).to eq(200)
+      expect(response.body).not_to include('Invalid')
+      expect(response.status).to eq(302)
     end
   end
 end
