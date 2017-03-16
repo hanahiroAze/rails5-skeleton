@@ -11,7 +11,7 @@ header class=['navbar','navbar-fixed-top','navbar-inverse']
             a.dropdown-toggle href="#" data-toggle="dropdown" Account
             ul.dropdown-menu
               li = link_to "PROFILE", current_user
-              li = link_to "SETTINGS", "#"
+              li = link_to "SETTINGS", edit_user_path(current_user)
               li.divider
               li = link_to "LOG OUT", logout_path, method: "delete"
         - else

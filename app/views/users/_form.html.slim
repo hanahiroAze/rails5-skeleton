@@ -1,0 +1,16 @@
+= form_for(@user) do |uf|
+  = render 'shared/error_messages', object: @user
+
+  = uf.label :name
+  = uf.text_field :name, class: 'form-control'
+
+  = uf.label :email
+  = uf.text_field :email, class: 'form-control'
+
+  = uf.label :password
+  = uf.password_field :password, class: 'form-control'
+
+  = uf.label :password_confirmation, "Confirmation"
+  = uf.password_field :password_confirmation, class: 'form-control'
+
+  = uf.submit yield(:button_text), class: "btn btn-primary"

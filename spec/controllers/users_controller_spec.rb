@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
 
   describe "POST success User::create" do
-    subject { post :create, test_user_param }
     let(:test_user_param) do
       {
         params:{
@@ -16,6 +15,10 @@ RSpec.describe UsersController, type: :controller do
         }
       }
     end
-    it { is_expected.to be_success }
+    it 'create user' do
+      expect {
+        post :create, test_user_param
+      }.to change(User, :count).by(1)
+    end
   end
 end
