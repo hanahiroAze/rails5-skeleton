@@ -13,6 +13,6 @@ header class=['navbar','navbar-fixed-top','navbar-inverse']
               li = link_to "PROFILE", current_user
               li = link_to "SETTINGS", edit_user_path(current_user)
               li.divider
-              li = link_to "LOG OUT", logout_path, method: "delete"
         - else
           li = link_to "LOG IN", login_path, method: "get"
+        li = link_to "LOG OUT", logout_path, method: "delete"
