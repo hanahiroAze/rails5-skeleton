@@ -26,6 +26,12 @@ RSpec.describe "Homes", type: :request do
       get "/login"
       expect(response).to have_http_status(200)
     end
+
+    it 'not allowed edit' do
+      get "/users/0/edit"
+      expect(response).to have_http_status(302)
+      expect(flash[:danger]).to include('Please log in')
+    end
   end
 
   describe "POST Request" do
@@ -109,47 +115,6 @@ RSpec.describe "Homes", type: :request do
       post login_path, test_success_user_param
       expect(response.body).not_to include('Invalid')
       expect(response.status).to eq(302)
-    end
-
-    describe 'Not Logged in' do
-      let(:test_user_param) do
-        {
-            params:{
-                user: {
-                    name: 'test',
-                    email: 'test@testtest.com',
-                    password: 'rails5',
-                    password_confirmation: 'rails5'
-                }
-            }
-        }
-      end
-
-      let(:test_login_user_param) do
-        {
-            params:{
-                user: {
-                    name: 'test2',
-                    email: 'test2@testtest.com',
-                    password: 'rails5',
-                    password_confirmation: 'rails5'
-                }
-            }
-        }
-      end
-
-      before do
-        post users_path, test_login_user_param
-        post users_path, test_user_param
-        @login_user = User.first
-        @user2 = User.second
-        login @login_user
-      end
-
-      it 'not allowed edit' do
-        get "/users/#{@user2.id}/edit"
-        expect(response).to have_http_status(302)
-      end
     end
   end
 end
