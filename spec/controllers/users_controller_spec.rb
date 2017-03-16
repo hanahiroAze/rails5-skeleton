@@ -25,28 +25,46 @@ RSpec.describe UsersController, type: :controller do
   describe 'After Login' do
     before do
       post :create, test_user_param
-      login User.first
+      @user = User.first
+      login @user
     end
 
     it 'edit user index' do
-      get :edit, {:params => {:id => User.first.id} }
+      get :edit, {:params => {:id => @user.id} }
       expect(response).to have_http_status(200)
     end
 
     it 'edit user email error' do
       patch :update, {
         :params => {
-          :id => User.first.id,
+          :id => @user.id,
           user: {
             name: 'test',
             email: 'test2nd.com',
-            password: 'rails5',
-            password_confirmation: 'rails5'
+            password: '',
+            password_confirmation: ''
           }
         }
       }
       expect(response).to have_http_status(200)
       expect(response.body).not_to include('error')
+    end
+
+    it 'edit user email success' do
+      patch :update, {
+          :params => {
+              :id => @user.id,
+              user: {
+                  name: 'test',
+                  email: 'test@2nd.com',
+                  password: '',
+                  password_confirmation: ''
+              }
+          }
+      }
+      expect(response).to have_http_status(302)
+      @user.reload
+      expect(@user.email).to eq('test@2nd.com')
     end
   end
 end
