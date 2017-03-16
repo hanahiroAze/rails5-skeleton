@@ -27,6 +27,7 @@ RSpec.describe UsersController, type: :controller do
       post :create, test_user_param
       login User.first
     end
+
     it 'create user' do
       get :edit, {:params => {:id => User.first.id} }
       expect(response).to have_http_status(200)
