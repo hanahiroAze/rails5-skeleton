@@ -18,7 +18,7 @@ RSpec.describe SessionsController, type: :controller do
       login User.first
     end
 
-    it 'logout success' do
+    it 'success' do
       post :destroy
       expect(response).to have_http_status(302)
     end

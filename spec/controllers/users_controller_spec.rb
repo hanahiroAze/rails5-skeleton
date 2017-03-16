@@ -28,9 +28,25 @@ RSpec.describe UsersController, type: :controller do
       login User.first
     end
 
-    it 'create user' do
+    it 'edit user index' do
       get :edit, {:params => {:id => User.first.id} }
       expect(response).to have_http_status(200)
+    end
+
+    it 'edit user email error' do
+      patch :update, {
+        :params => {
+          :id => User.first.id,
+          user: {
+            name: 'test',
+            email: 'test2nd.com',
+            password: 'rails5',
+            password_confirmation: 'rails5'
+          }
+        }
+      }
+      expect(response).to have_http_status(200)
+      expect(response.body).not_to include('error')
     end
   end
 end
