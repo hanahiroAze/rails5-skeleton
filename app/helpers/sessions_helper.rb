@@ -38,6 +38,15 @@ module SessionsHelper
     cookies.delete(:remember_token)
   end
 
+  def redirect_back_or(default)
+    redirect_to(session[:forwarding_url] || default)
+    session.delete(:forwarding_url)
+  end
+
+  def store_location
+    session[:forwarding_url] = request.original_url if request.get?
+  end
+
   private
     def login_if_remembered(user)
       if user && user.authenticated?(cookies[:remember_token])
