@@ -26,6 +26,12 @@ RSpec.describe "Homes", type: :request do
       get "/login"
       expect(response).to have_http_status(200)
     end
+
+    it 'not allowed edit' do
+      get "/users/0/edit"
+      expect(response).to have_http_status(302)
+      expect(flash[:danger]).to include('Please log in')
+    end
   end
 
   describe "POST Request" do
@@ -107,7 +113,6 @@ RSpec.describe "Homes", type: :request do
       }
       add_session(session)
       post login_path, test_success_user_param
-      expect(response.body).not_to include('Invalid')
       expect(response.status).to eq(302)
     end
   end
