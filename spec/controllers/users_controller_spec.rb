@@ -90,7 +90,6 @@ RSpec.describe UsersController, type: :controller do
       login @test_login_user_param
       get :edit, {params: {id: @user.id}}
       expect(response).to have_http_status(302)
-      expect(flash[:danger]).to include('Please log in')
     end
   end
 end
