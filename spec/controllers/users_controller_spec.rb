@@ -92,4 +92,12 @@ RSpec.describe UsersController, type: :controller do
       expect(response).to have_http_status(302)
     end
   end
+
+  describe 'show all user' do
+    it 'not arrowed' do
+      get :index
+      expect(response).to have_http_status(302)
+      expect(response).to redirect_to(login_path)
+    end
+  end
 end
