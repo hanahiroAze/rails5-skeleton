@@ -67,4 +67,30 @@ RSpec.describe UsersController, type: :controller do
       expect(@user.email).to eq('test@2nd.com')
     end
   end
+
+  describe 'edit other user' do
+    let(:test_login_user_param) do
+      {
+          params:{
+              user: {
+                  name: 'test',
+                  email: 'test2@testtest.com',
+                  password: 'rails5',
+                  password_confirmation: 'rails5'
+              }
+          }
+      }
+    end
+
+    it 'not allowed' do
+      post :create, test_user_param
+      post :create, test_login_user_param
+      @user = User.first
+      @test_login_user_param = User.second
+      login @test_login_user_param
+      get :edit, {params: {id: @user.id}}
+      expect(response).to have_http_status(302)
+      expect(flash[:danger]).to include('Please log in')
+    end
+  end
 end
