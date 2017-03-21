@@ -44,7 +44,7 @@ module SessionsHelper
 
   private
     def login_if_remembered(user)
-      if user && user.authenticated?(cookies[:remember_token])
+      if user && user.authenticated?(:remember, cookies[:remember_token])
         log_in user
         @current_user = user
       end
