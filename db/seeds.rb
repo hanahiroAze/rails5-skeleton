@@ -10,6 +10,8 @@ User.with_writable {
     email: "example@railstutorial.com",
     password:              "foobar",
     password_confirmation: "foobar",
-    admin: true
+    admin: true,
+    activated: true,
+    activated_at: Time.zone.now
   )
 }

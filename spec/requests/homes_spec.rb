@@ -50,14 +50,15 @@ RSpec.describe "Homes", type: :request do
 
     let(:test_success_user_param) do
       {
-          params:{
-              user: {
-                  name: 'abcdef',
-                  email: 'test@success.com',
-                  password: 'rails5',
-                  password_confirmation: 'rails5'
-              }
-          }
+        params:{
+            user: {
+                name: 'abcdef',
+                email: 'test@success.com',
+                password: 'rails5',
+                password_confirmation: 'rails5',
+                activation_token: User.new_token
+            }
+        }
       }
     end
 
