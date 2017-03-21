@@ -117,4 +117,18 @@ RSpec.describe "Homes", type: :request do
       expect(response.status).to eq(302)
     end
   end
+
+  describe 'show' do
+    fixtures :users
+    fixtures :microposts
+
+    it 'profile' do
+      @user = users(:michael)
+      get user_path(@user)
+
+      expect(response.status).to eq(200)
+      expect(response.body.titleize).to include(@user.name)
+      expect(response.body).to include('I just ate an orange!')
+    end
+  end
 end

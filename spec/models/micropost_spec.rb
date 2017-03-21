@@ -29,6 +29,7 @@ RSpec.describe Micropost, type: :model do
   end
 
   describe 'orders' do
+    fixtures :users
     fixtures :microposts
     it 'should be most recent first' do
       expect(microposts(:most_recent)).to eq(Micropost.first)
