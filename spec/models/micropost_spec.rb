@@ -34,4 +34,14 @@ RSpec.describe Micropost, type: :model do
       expect(microposts(:most_recent)).to eq(Micropost.first)
     end
   end
+
+  describe 'delete' do
+    it 'delete posts after destroying user' do
+      @user.microposts.create!(content: "Lorem ipsum")
+      before = Micropost.count
+      @user.destroy
+      after = Micropost.count
+      expect(before - after).to eq(1)
+    end
+  end
 end
