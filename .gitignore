@@ -27,3 +27,4 @@ config/environments/*.local.yml
 spec/examples.txt/
 /Gemfile.lock
 /rails5-skelton.iml
+/railways.cache
