@@ -22,5 +22,17 @@ RSpec.describe Relationship, type: :model do
       @relationship.followed_id = nil
       expect(@relationship.valid?).to eq(false)
     end
+
+    it 'follow and unfollow' do
+      michael = users(:michael)
+      archer = users(:archer)
+
+      michael.follow(archer)
+      expect(michael.following?(archer)).to eq(true)
+      expect(archer.followers.include?(michael)).to eq(true)
+
+      michael.unfollow(archer)
+      expect(michael.following?(archer)).not_to eq(true)
+    end
   end
 end
