@@ -158,4 +158,20 @@ RSpec.describe "Homes", type: :request do
       expect(response).to redirect_to(login_path)
     end
   end
+
+  describe 'relationship' do
+    fixtures :users
+
+    it 'show following not login' do
+      @user = users(:michael)
+      get following_user_path(@user)
+      expect(response).to redirect_to(login_url)
+    end
+
+    it 'show followwers not login' do
+      @user = users(:michael)
+      get followers_user_path(@user)
+      expect(response).to redirect_to(login_url)
+    end
+  end
 end

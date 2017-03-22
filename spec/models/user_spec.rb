@@ -66,4 +66,28 @@ RSpec.describe User, type: :model do
     user.password = user.password_confirmation = "a" * 5
     expect(user.valid?).to eq(false)
   end
+
+  describe 'feed' do
+    fixtures :users
+    fixtures :microposts
+    it 'should have right posts' do
+      michael = users(:michael)
+      archer = users(:archer)
+      lana = users(:lana)
+
+      michael.follow(lana)
+
+      lana.microposts.each do |post_following|
+        expect(michael.feed.include?(post_following)).to eq(true)
+      end
+
+      michael.microposts.each do |post_self|
+        expect(michael.feed.include?(post_self)).to eq(true)
+      end
+
+      archer.microposts.each do |post_unfollowed|
+        expect(michael.feed.include?(post_unfollowed)).not_to eq(true)
+      end
+    end
+  end
 end
