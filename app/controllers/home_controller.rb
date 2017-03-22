@@ -1,6 +1,9 @@
 class HomeController < ApplicationController
   def index
-    @micropost = helpers.current_user.microposts.build if helpers.logged_in?
+    if helpers.logged_in?
+      @micropost = helpers.current_user.microposts.build
+      @feed_items = helpers.current_user.feed.paginate(page: params[:page])
+    end
   end
 
   def help
