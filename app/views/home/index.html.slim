@@ -1,10 +1,6 @@
 = provide(:title, "Index")
 
-.center.jumbotron
-  h1 Welcome
-  h2
-    | this is the HOME page for the #{link_to 'tutorial', '#'}
-    | sample.
-  = link_to "Sign up Now", signup_path, class:"btn btn-lg btn-primary"
-
-= link_to image_tag("rails.png", alt: "LOGO"), 'http://rubyonrails.org/'
+- if logged_in?
+  = render 'home/logged_in'
+- else
+  = render 'home/not_login'

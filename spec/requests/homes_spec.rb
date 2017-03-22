@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe "Homes", type: :request do
   describe "GET Access" do
+    fixtures :users
+
     it "index" do
       get "/"
       expect(response).to have_http_status(200)
@@ -28,9 +30,10 @@ RSpec.describe "Homes", type: :request do
     end
 
     it 'not allowed edit' do
-      get "/users/0/edit"
+      @user = users(:michael)
+      get edit_user_path(@user)
       expect(response).to have_http_status(302)
-      expect(flash[:danger]).to include('Please log in')
+      expect(response).to redirect_to(login_path)
     end
   end
 
@@ -115,6 +118,44 @@ RSpec.describe "Homes", type: :request do
       add_session(session)
       post login_path, test_success_user_param
       expect(response.status).to eq(302)
+    end
+  end
+
+  describe 'show' do
+    fixtures :users
+    fixtures :microposts
+
+    it 'profile' do
+      @user = users(:michael)
+      get user_path(@user)
+
+      expect(response.status).to eq(200)
+      expect(response.body.titleize).to include(@user.name)
+      expect(response.body).to include('I just ate an orange!')
+    end
+
+    it 'micropost pagination' do
+      @user = users(:michael)
+      get user_path(@user)
+      expect(response.body).to include('Next Label')
+    end
+  end
+
+  describe 'micropost' do
+    fixtures :users
+    fixtures :microposts
+
+    it 'not login create' do
+      post microposts_path ,params: {micropost: {content: 'Lorem ipsum'}}
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to(login_path)
+    end
+
+    it 'not login delete' do
+      @micropost = microposts(:orange)
+      delete micropost_path(@micropost)
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to(login_path)
     end
   end
 end
