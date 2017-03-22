@@ -27,6 +27,7 @@ class MicropostsController < ApplicationController
 
     def correct_user
       @micropost = helpers.current_user.microposts.find_by(id: params[:id])
+      flash[:danger] = 'cant delete except you'
       redirect_to root_url if @micropost.nil?
     end
 end
