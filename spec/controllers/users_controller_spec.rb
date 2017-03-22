@@ -27,7 +27,6 @@ RSpec.describe UsersController, type: :controller do
     before do
       post :create, test_user_param
       @user = User.first
-      ActionMailer::Base.deliveries.clear
       login @user
     end
 
