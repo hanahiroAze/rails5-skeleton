@@ -22,12 +22,11 @@ class MicropostsController < ApplicationController
   private
 
     def micropost_params
-      params.require(:micropost).permit(:content)
+      params.require(:micropost).permit(:content, :picture)
     end
 
     def correct_user
       @micropost = helpers.current_user.microposts.find_by(id: params[:id])
-      flash[:danger] = 'cant delete except you'
       redirect_to root_url if @micropost.nil?
     end
 end
