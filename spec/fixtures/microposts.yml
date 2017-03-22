@@ -17,3 +17,10 @@ most_recent:
   content: "Writing a short test"
   created_at: <%= Time.zone.now.strftime("%Y-%m-%d %H:%M:%S") %>
   user: michael
+
+<% 30.times do |n| %>
+micropost_<%= n %>:
+  content: <%= n %>
+  created_at: <%= 42.days.ago.strftime("%Y-%m-%d %H:%M:%S") %>
+  user: michael
+<% end %>

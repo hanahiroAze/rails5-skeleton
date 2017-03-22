@@ -130,5 +130,12 @@ RSpec.describe "Homes", type: :request do
       expect(response.body.titleize).to include(@user.name)
       expect(response.body).to include('I just ate an orange!')
     end
+
+    it 'micropost pagenation' do
+      @user = users(:michael)
+      get user_path(@user)
+      expect(response.body).to include('Next Label')
+
+    end
   end
 end
